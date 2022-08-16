@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Mongo;
 
-class MongoUserRepository
+use App\Repositories\Contracts\UserRepositoryInterface;
+
+class MongoUserRepository extends MongoBaseRepository implements UserRepositoryInterface
 {
 
 }

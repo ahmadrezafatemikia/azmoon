@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Json;
 
-class JsonBaseRepositoy
+use App\Repositories\Contracts\RepositoryInterface;
+
+class JsonBaseRepositoy implements RepositoryInterface
 {
 
 }

@@ -1,24 +1,40 @@
 <?php
 
-namespace Tests\api\v1;
+namespace Tests\api\v1\Users;
 
-use App\Http\Controllers\API\v1\UsersController as V1UsersController;
-use App\Http\Controllers\API\v2\UsersController as V2UsersController;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class UsersTest extends TestCase
 {
-    public function testCreateUserInApiV1()
+    public function test_ShouldCreateAUser()
     {
-        $user = new V1UsersController();
-        $userCreate = $user->Add();
-        $this->assertEquals($userCreate, 1);
+        $response = $this->call('POST', 'api/v1/users', [
+            'fullname' => 'Ahmadreza Fatemikia',
+            'email' => 'ahmadrezafatemikia@gmail.com',
+            'mobile' => '09931398492',
+            'password' => '0200741063'
+        ]);
+        $this->assertEquals(201, $response->status());
+        $this->seeJsonStructure([
+            'success',
+            'message',
+            'data' => [
+                'fullname',
+                'email',
+                'mobile',
+                'password'
+            ],
+        ]);
     }
 
-    public function testCreateUserInApiV2()
+    public function test_throwexp_when_parameters_send_empty()
     {
-        $user = new V2UsersController();
-        $userCreate = $user->Add();
-        $this->assertEquals($userCreate, 1);
+        $response = $this->call('POST', 'api/v1/users', [
+            'fullname' => '',
+            'email' => '',
+            'mobile' => '',
+            'password' => ''
+        ]);
+        $this->assertEquals(422, $response->status());
     }
 }
